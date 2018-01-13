@@ -34,6 +34,7 @@ public class InventoryListRecyclerAdapter extends
     private String supplierEmail;
     private String supplierPhone;
 
+
     public InventoryListRecyclerAdapter(Context context, Cursor cursor) {
         super(context, cursor);
         this.context = context;
@@ -51,7 +52,7 @@ public class InventoryListRecyclerAdapter extends
 
     @Override
     public void onBindViewHolder(InventoryListViewHolder viewHolder, Cursor cursor) {
-        int productNameColumnIndex,priceColIndex,quantityColIndex,supplierNameColIndex,supplierEmailColIndex,supplierPhoneColIndex;
+        int idIndex,productNameColumnIndex,priceColIndex,quantityColIndex,supplierNameColIndex,supplierEmailColIndex,supplierPhoneColIndex;
 
         productNameColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_NAME);
         priceColIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_PRICE);
@@ -59,6 +60,7 @@ public class InventoryListRecyclerAdapter extends
         supplierNameColIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME);
         supplierEmailColIndex= cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_EMAIL);
         supplierPhoneColIndex= cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE);
+        idIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry._ID);
 
        String product_name = cursor.getString(productNameColumnIndex);
        String quantity     = cursor.getString(quantityColIndex);
@@ -66,6 +68,7 @@ public class InventoryListRecyclerAdapter extends
        String supplierName = cursor.getString(supplierNameColIndex);
        String supplierEmail= cursor.getString(supplierEmailColIndex);
        String supplierPhone= cursor.getString(supplierPhoneColIndex);
+       int  _id = cursor.getInt(idIndex);
 
         setQuantity(quantity);
         viewHolder.inventoryProductName.setText(String.format(context.getString(R.string.inventory_product_name),product_name));
@@ -80,6 +83,7 @@ public class InventoryListRecyclerAdapter extends
                 intent.putExtra("product_name",product_name);
                 intent.putExtra("quantity",getQuantity());
                 intent.putExtra("price",price);
+                intent.putExtra("data_id",_id);
                 intent.putExtra("supplier_name",supplierName);
                 intent.putExtra("supplier_email",supplierEmail);
                 intent.putExtra("supplier_phone",supplierPhone);
@@ -111,9 +115,9 @@ public class InventoryListRecyclerAdapter extends
 
                 }
                 else{
-                    viewHolder.productQuantity.setText(String.format(context.getString(R.string.inventory_quantity), String.valueOf(--v1)));
-//                    viewHolder.saleButton.setEnabled(false);
-//                    Toast.makeText(context,"Not Available",Toast.LENGTH_LONG).show();
+                    viewHolder.productQuantity.setText(String.format(context.getString(R.string.inventory_quantity), String.valueOf(0)));
+                    viewHolder.saleButton.setEnabled(false);
+                    Toast.makeText(context,"Not Available",Toast.LENGTH_LONG).show();
 
                 }
             }

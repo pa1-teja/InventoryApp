@@ -24,7 +24,7 @@ public class AddProduct extends AppCompatActivity {
     public EditText productName, price,quantity,supplierName,supplierEmail,supplierPhone;
     public Button addQuantity,reduceQuantity,saveProduct,placeOrder;
     public String productName_str, price_str,quantity_str,supplierName_str,supplierEmail_str,supplierPhone_str;
-    int prod_quantity;
+    public long prod_quantity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,28 +175,19 @@ public class AddProduct extends AppCompatActivity {
         setSupplierPhone_str(supplierPhone_str);
 
 
-        prod_quantity = Integer.parseInt(quantity_str);
-
-
-        String regx = "^[\\p{L} .'-]+$";
-
-        if (Character.isDigit(productName_str.charAt(0)) ||
-                productName_str.isEmpty() ||
-                (productName_str.matches(".*[A-Za-z].*") &&
-                        productName_str.matches(".*[0-9].*") &&
-                        productName_str.matches("[A-Za-z0-9]*"))){
+        if (productName_str.isEmpty() || productName_str == null){
             alertUser("productName_str");
             return false;
         }
-        else if (price_str.contains("[^0-9A-Za-z ]")){
+        else if (!price_str.contains("[^0-9]") && (price_str.isEmpty() || price_str == null)){
             alertUser("price_str");
             return false;
         }
-        else if (quantity_str.contains("[^0-9A-Za-z ]")){
+        else if (!quantity_str.contains("[^0-9]") && (quantity_str.isEmpty() || quantity_str == null)){
             alertUser("quantity_str");
             return false;
         }
-        else if (supplierName_str.isEmpty() || supplierName_str.contains(regx)){
+        else if (supplierName_str.isEmpty() || supplierName_str == null){
             alertUser("supplierName_str");
             return false;
         }
@@ -208,8 +199,10 @@ public class AddProduct extends AppCompatActivity {
             alertUser("supplierPhone_str");
             return false;
         }
-        else
+        else {
+            prod_quantity = Integer.parseInt(quantity_str);
             return true;
+        }
     }
 
 
@@ -218,7 +211,7 @@ public class AddProduct extends AppCompatActivity {
         builder.setTitle("Oops");
         switch (match){
             case "productName_str":
-                builder.setMessage("The product name cannot start with a numeric or should not be empty. " +
+                builder.setMessage("The product name cannot be empty. " +
                         "Please check and re-type the product name.");
                 builder.setPositiveButton("OKay", new DialogInterface.OnClickListener() {
                     @Override
@@ -228,7 +221,7 @@ public class AddProduct extends AppCompatActivity {
                 });
                 break;
             case "price_str":
-                builder.setMessage("The product price cannot be alphabets or special charecters. It can only be numbers. " +
+                builder.setMessage("The product price cannot be empty or contain alphabets or charecters. It can only be numbers. " +
                         "Please check and re-type the product price.");
                 builder.setPositiveButton("OKay", new DialogInterface.OnClickListener() {
                     @Override

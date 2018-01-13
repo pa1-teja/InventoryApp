@@ -48,11 +48,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        listRecyclerAdapter = new InventoryListRecyclerAdapter(this, null);
-
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-            inventoryListRecyclerView.setLayoutManager(layoutManager);
-            inventoryListRecyclerView.setAdapter(listRecyclerAdapter);
 
     }
 
@@ -76,6 +71,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+        listRecyclerAdapter = new InventoryListRecyclerAdapter(this, data);
+
+        if (data.getCount() >0) {
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+            inventoryListRecyclerView.setLayoutManager(layoutManager);
+            inventoryListRecyclerView.setAdapter(listRecyclerAdapter);
+        } else
+            emptyView.setVisibility(View.VISIBLE);
+
         listRecyclerAdapter.swapCursor(data);
 
     }
