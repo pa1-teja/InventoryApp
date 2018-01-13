@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="12dp"
+    tools:context="com.example.pavan.inventoryapp.AddProduct">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="product details"
+        android:textAllCaps="true"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:gravity="center"/>
+
+    <EditText
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/product_name_input"
+        android:layout_marginBottom="8dp"
+        android:tooltipText="@string/inventory_product_name"
+        android:inputType="textAutoCorrect"
+        android:hint="@string/product_name"/>
+
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll"
+        android:layout_below="@id/product_name_input"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:digits="1234567890"
+            android:tooltipText="@string/product_price"
+            android:hint="@string/product_price"
+            android:id="@+id/product_price_input"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:id="@+id/add_quantity"
+            android:tooltipText="Add Quantity"
+            android:background="@drawable/ic_add_circle_outline_black_24dp"
+            />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:autoSizeTextType="uniform"
+            android:hint="@string/product_quantity"
+            android:tooltipText="@string/product_quantity"
+            android:id="@+id/product_quantity_input"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:tooltipText="Reduce Quantity"
+            android:id="@+id/reduct_quantity"
+            android:background="@drawable/ic_remove_circle_outline_black_24dp"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/supplier_name"
+        android:hint="@string/supplier_name"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/ll"
+        />
+
+    <EditText
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/supplier_email"
+        android:layout_below="@+id/supplier_name"
+        android:hint="@string/supplier_email"
+        android:inputType="textEmailAddress"/>
+
+    <EditText
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:id="@+id/supplier_phone"
+        android:layout_below="@id/supplier_email"
+        android:hint="@string/supplier_phone"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/supplier_phone"
+        android:text="place order"
+        android:id="@+id/place_order_button"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="24dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/save_button"
+        android:text="Update details"
+        android:layout_below="@+id/supplier_phone"
+        android:layout_toRightOf="@+id/place_order_button"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"/>
+</RelativeLayout>
