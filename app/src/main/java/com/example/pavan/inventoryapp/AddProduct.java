@@ -184,6 +184,7 @@ public class AddProduct extends AppCompatActivity {
             return false;
         }
         else if (!quantity_str.contains("[^0-9]") && (quantity_str.isEmpty() || quantity_str == null)){
+            if (quantity_str != null && Integer.valueOf(quantity_str)<0)
             alertUser("quantity_str");
             return false;
         }
@@ -231,7 +232,7 @@ public class AddProduct extends AppCompatActivity {
                 });
                 break;
             case "quantity_str":
-                builder.setMessage("The product quantity cannot be alphabets or special charecters. It can only be numbers. " +
+                builder.setMessage("The product quantity cannot be alphabets, special characters or negative numbers. It can only be numbers. " +
                         "Please check and re-type the product quantity.");
                 builder.setPositiveButton("OKay", new DialogInterface.OnClickListener() {
                     @Override

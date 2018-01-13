@@ -21,12 +21,12 @@ public class InventoryDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_INVENTORY_TABLE = "CREATE TABLE IF NOT EXISTS " + InventoryContract.InventoryEntry.TABLE_NAME +
                 " (" + InventoryContract.InventoryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                       InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_NAME + " TEXT NOT NULL," +
-                       InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_PRICE+ " TEXT NOT NULL," +
-                       InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_QUANTITY + " TEXT NOT NULL," +
-                       InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME + " TEXT NOT NULL," +
-                       InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_EMAIL+ " TEXT NOT NULL," +
-                       InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE+ " TEXT NOT NULL" + ")";
+                InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_NAME + " TEXT NOT NULL," +
+                InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_PRICE + " TEXT NOT NULL," +
+                InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_QUANTITY + " TEXT NOT NULL," +
+                InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME + " TEXT NOT NULL," +
+                InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_EMAIL + " TEXT NOT NULL," +
+                InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE + " TEXT NOT NULL" + ")";
 
         db.execSQL(SQL_CREATE_INVENTORY_TABLE);
 

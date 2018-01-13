@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,49 +43,48 @@ public class InventoryListRecyclerAdapter extends
 
     @Override
     public InventoryListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.inventory_list_item,parent,false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.inventory_list_item, parent, false);
         return new InventoryListViewHolder(itemView);
     }
 
 
-
     @Override
     public void onBindViewHolder(InventoryListViewHolder viewHolder, Cursor cursor) {
-        int idIndex,productNameColumnIndex,priceColIndex,quantityColIndex,supplierNameColIndex,supplierEmailColIndex,supplierPhoneColIndex;
+        int idIndex, productNameColumnIndex, priceColIndex, quantityColIndex, supplierNameColIndex, supplierEmailColIndex, supplierPhoneColIndex;
 
         productNameColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_NAME);
         priceColIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_PRICE);
         quantityColIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_QUANTITY);
         supplierNameColIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME);
-        supplierEmailColIndex= cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_EMAIL);
-        supplierPhoneColIndex= cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE);
+        supplierEmailColIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_EMAIL);
+        supplierPhoneColIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE);
         idIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry._ID);
 
-       String product_name = cursor.getString(productNameColumnIndex);
-       String quantity     = cursor.getString(quantityColIndex);
-       String price        = cursor.getString(priceColIndex);
-       String supplierName = cursor.getString(supplierNameColIndex);
-       String supplierEmail= cursor.getString(supplierEmailColIndex);
-       String supplierPhone= cursor.getString(supplierPhoneColIndex);
-       int  _id = cursor.getInt(idIndex);
+        String product_name = cursor.getString(productNameColumnIndex);
+        String quantity = cursor.getString(quantityColIndex);
+        String price = cursor.getString(priceColIndex);
+        String supplierName = cursor.getString(supplierNameColIndex);
+        String supplierEmail = cursor.getString(supplierEmailColIndex);
+        String supplierPhone = cursor.getString(supplierPhoneColIndex);
+        int _id = cursor.getInt(idIndex);
 
         setQuantity(quantity);
-        viewHolder.inventoryProductName.setText(String.format(context.getString(R.string.inventory_product_name),product_name));
-        viewHolder.productQuantity.setText(String.format(context.getString(R.string.inventory_quantity),getQuantity()));
-        viewHolder.productPrice.setText(String.format(context.getString(R.string.inventory_price),price));
+        viewHolder.inventoryProductName.setText(String.format(context.getString(R.string.inventory_product_name), product_name));
+        viewHolder.productQuantity.setText(String.format(context.getString(R.string.inventory_quantity), getQuantity()));
+        viewHolder.productPrice.setText(String.format(context.getString(R.string.inventory_price), price));
 
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,EditActivity.class);
-                intent.putExtra("product_name",product_name);
-                intent.putExtra("quantity",getQuantity());
-                intent.putExtra("price",price);
-                intent.putExtra("data_id",_id);
-                intent.putExtra("supplier_name",supplierName);
-                intent.putExtra("supplier_email",supplierEmail);
-                intent.putExtra("supplier_phone",supplierPhone);
+                Intent intent = new Intent(context, EditActivity.class);
+                intent.putExtra("product_name", product_name);
+                intent.putExtra("quantity", viewHolder.productQuantity.getText().toString().substring(10));
+                intent.putExtra("price", price);
+                intent.putExtra("data_id", _id);
+                intent.putExtra("supplier_name", supplierName);
+                intent.putExtra("supplier_email", supplierEmail);
+                intent.putExtra("supplier_phone", supplierPhone);
 
                 context.startActivity(intent);
             }
@@ -108,16 +106,15 @@ public class InventoryListRecyclerAdapter extends
                     s = String.valueOf(v1);
                     setQuantity(s);
                     viewHolder.productQuantity.setText(String.format(context.getString(R.string.inventory_quantity), getQuantity()));
-                    Uri newUri = ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI,id);
+                    Uri newUri = ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI, id);
                     ContentValues values = new ContentValues();
-                    values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_QUANTITY,String.valueOf(v1));
-                    context.getContentResolver().update(newUri,values, InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_NAME + "=?",new String[]{product_name});
+                    values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_QUANTITY, String.valueOf(v1));
+                    context.getContentResolver().update(newUri, values, InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_NAME + "=?", new String[]{product_name});
 
-                }
-                else{
+                } else {
                     viewHolder.productQuantity.setText(String.format(context.getString(R.string.inventory_quantity), String.valueOf(0)));
                     viewHolder.saleButton.setEnabled(false);
-                    Toast.makeText(context,"Not Available",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Not Available", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -133,7 +130,7 @@ public class InventoryListRecyclerAdapter extends
         return quantity;
     }
 
-    class InventoryListViewHolder extends RecyclerView.ViewHolder{
+    class InventoryListViewHolder extends RecyclerView.ViewHolder {
 
 
         public TextView inventoryProductName, productPrice, productQuantity;
@@ -142,9 +139,9 @@ public class InventoryListRecyclerAdapter extends
         public InventoryListViewHolder(View itemView) {
             super(itemView);
             inventoryProductName = itemView.findViewById(R.id.inventory_product_name);
-            productPrice         = itemView.findViewById(R.id.inventory_price);
-            productQuantity      = itemView.findViewById(R.id.inventory_quantity);
-            saleButton           = itemView.findViewById(R.id.sale_button);
+            productPrice = itemView.findViewById(R.id.inventory_price);
+            productQuantity = itemView.findViewById(R.id.inventory_quantity);
+            saleButton = itemView.findViewById(R.id.sale_button);
         }
 
     }

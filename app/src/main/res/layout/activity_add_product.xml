@@ -59,6 +59,7 @@
             android:inputType="number"
             android:autoSizeTextType="uniform"
             android:hint="@string/product_quantity"
+            android:maxLength="8"
             android:tooltipText="@string/product_quantity"
             android:id="@+id/product_quantity_input"/>
 

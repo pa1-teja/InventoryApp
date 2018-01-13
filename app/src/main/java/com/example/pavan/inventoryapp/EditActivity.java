@@ -4,9 +4,9 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -21,8 +21,8 @@ import com.example.pavan.inventoryapp.DataStore.InventoryContract;
 
 public class EditActivity extends AppCompatActivity {
 
-    public EditText productName, price,quantity,supplierName,supplierEmail,supplierPhone;
-    public Button addQuantity,reduceQuantity,saveProduct,placeOrder;
+    public EditText productName, price, quantity, supplierName, supplierEmail, supplierPhone;
+    public Button addQuantity, reduceQuantity, saveProduct, placeOrder;
     private long prod_quantity;
     private String supplier_phone;
     private String product_name;
@@ -38,24 +38,24 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         productName = findViewById(R.id.product_name_input);
-        price       = findViewById(R.id.product_price_input);
-        quantity    = findViewById(R.id.product_quantity_input);
-        supplierName= findViewById(R.id.supplier_name);
-        supplierEmail= findViewById(R.id.supplier_email);
-        supplierPhone= findViewById(R.id.supplier_phone);
+        price = findViewById(R.id.product_price_input);
+        quantity = findViewById(R.id.product_quantity_input);
+        supplierName = findViewById(R.id.supplier_name);
+        supplierEmail = findViewById(R.id.supplier_email);
+        supplierPhone = findViewById(R.id.supplier_phone);
 
         addQuantity = findViewById(R.id.add_quantity);
         reduceQuantity = findViewById(R.id.reduct_quantity);
         saveProduct = findViewById(R.id.save_button);
-        placeOrder  = findViewById(R.id.place_order_button);
+        placeOrder = findViewById(R.id.place_order_button);
 
         product_name = getIntent().getStringExtra("product_name");
         product_price = getIntent().getStringExtra("price");
         product_quantity = getIntent().getStringExtra("quantity");
         supplier_name = getIntent().getStringExtra("supplier_name");
-        supplier_email= getIntent().getStringExtra("supplier_email");
-        supplier_phone= getIntent().getStringExtra("supplier_phone");
-        _id = getIntent().getIntExtra("data_id",-1);
+        supplier_email = getIntent().getStringExtra("supplier_email");
+        supplier_phone = getIntent().getStringExtra("supplier_phone");
+        _id = getIntent().getIntExtra("data_id", -1);
 
         prod_quantity = Integer.parseInt(product_quantity);
 
@@ -83,9 +83,9 @@ public class EditActivity extends AppCompatActivity {
         saveProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              boolean b = updateProduct();
-              if (b)
-                  startActivity(new Intent(EditActivity.this,MainActivity.class));
+                boolean b = updateProduct();
+                if (b)
+                    startActivity(new Intent(EditActivity.this, MainActivity.class));
             }
         });
 
@@ -99,9 +99,9 @@ public class EditActivity extends AppCompatActivity {
                 emailIntent.setType("text/plain");
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Placing Inventory Order");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hi,\n I just wanted to place an order of "+ product_name+ " of Quantity: "
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hi,\n I just wanted to place an order of " + product_name + " of Quantity: "
                         + product_quantity + " which is worth of Rs." + product_price + "/-" + "\n" + "Please deliver the goods as soon as possible. \n"
-                + "\n" + " Thank you.");
+                        + "\n" + " Thank you.");
 
 
                 try {
@@ -115,71 +115,64 @@ public class EditActivity extends AppCompatActivity {
         });
     }
 
-    public void decreaseQuantity(){
-        if (prod_quantity >0)
+    public void decreaseQuantity() {
+        if (prod_quantity > 0)
             quantity.setText(String.valueOf(--prod_quantity));
         else
             quantity.setText(String.valueOf(0));
     }
 
-    public void increaseQuantity(){
+    public void increaseQuantity() {
         quantity.setText(String.valueOf(++prod_quantity));
     }
 
     private boolean updateProduct() {
 
 
-            product_name = productName.getText().toString();
-            product_price= price.getText().toString();
-            product_quantity = quantity.getText().toString();
-            supplier_name = supplierName.getText().toString();
-            supplier_email = supplierEmail.getText().toString();
-            supplier_phone = supplierPhone.getText().toString();
+        product_name = productName.getText().toString();
+        product_price = price.getText().toString();
+        product_quantity = quantity.getText().toString();
+        supplier_name = supplierName.getText().toString();
+        supplier_email = supplierEmail.getText().toString();
+        supplier_phone = supplierPhone.getText().toString();
 
 
-        if (product_name.isEmpty() || product_name == null){
+        if (product_name.isEmpty() || product_name == null) {
             alertUser("productName_str");
             return false;
-        }
-        else if (!product_price.contains("[^0-9]") && (product_price.isEmpty() || product_price== null)){
+        } else if (!product_price.contains("[^0-9]") && (product_price.isEmpty() || product_price == null)) {
             alertUser("price_str");
             return false;
-        }
-        else if (!product_quantity.contains("[^0-9]") && (product_quantity.isEmpty() || product_quantity == null)){
-            alertUser("quantity_str");
+        } else if (!product_quantity.contains("[^0-9]") && (product_quantity.isEmpty() || product_quantity == null)) {
+            if (product_quantity != null && Integer.valueOf(product_quantity) < 0)
+                alertUser("quantity_str");
             return false;
-        }
-        else if (supplier_name.isEmpty() || supplier_name== null){
+        } else if (supplier_name.isEmpty() || supplier_name == null) {
             alertUser("supplierName_str");
             return false;
-        }
-        else if (!(!TextUtils.isEmpty(supplier_email) && Patterns.EMAIL_ADDRESS.matcher(supplier_email).matches())){
+        } else if (!(!TextUtils.isEmpty(supplier_email) && Patterns.EMAIL_ADDRESS.matcher(supplier_email).matches())) {
             alertUser("supplierEmail_str");
             return false;
-        }
-        else if (!(android.util.Patterns.PHONE.matcher(supplier_phone).matches())){
+        } else if (!(android.util.Patterns.PHONE.matcher(supplier_phone).matches())) {
             alertUser("supplierPhone_str");
             return false;
-        }
-        else {
-//            prod_quantity = Integer.parseInt(quantity_str);
+        } else {
             ContentValues values = new ContentValues();
-            values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_NAME,product_name);
-            values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_PRICE,product_price);
-            values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_QUANTITY,prod_quantity);
-            values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME,supplier_name);
-            values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_EMAIL,supplier_email);
-            values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE,supplier_phone);
+            values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_NAME, product_name);
+            values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_PRICE, product_price);
+            values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_QUANTITY, product_quantity);
+            values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME, supplier_name);
+            values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_EMAIL, supplier_email);
+            values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE, supplier_phone);
 
             int rowsUpdated = getContentResolver().update(InventoryContract.InventoryEntry.CONTENT_URI,
-                    values, InventoryContract.InventoryEntry._ID + "=?" , new String[]{String.valueOf(_id)});
+                    values, InventoryContract.InventoryEntry._ID + "=?", new String[]{String.valueOf(_id)});
 
-            if (rowsUpdated > 0){
-                Log.d(getClass().getName(),"Data Updated successfully");
-                Toast.makeText(this,"Data Updated successfully",Toast.LENGTH_LONG).show();
+            if (rowsUpdated > 0) {
+                Log.d(getClass().getName(), "Data Updated successfully");
+                Toast.makeText(this, "Data Updated successfully", Toast.LENGTH_LONG).show();
                 return true;
-            }
-            else {
+            } else {
                 Log.d(getClass().getName(), "Data Update failed");
                 Toast.makeText(this, "Data Update failed", Toast.LENGTH_LONG).show();
                 return true;
@@ -188,10 +181,10 @@ public class EditActivity extends AppCompatActivity {
     }
 
 
-    public void alertUser(String match){
+    public void alertUser(String match) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Oops");
-        switch (match){
+        switch (match) {
             case "productName_str":
                 builder.setMessage("The product name cannot be empty. " +
                         "Please check and re-type the product name.");
@@ -279,11 +272,27 @@ public class EditActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.delete_product) {
-            boolean b = deleteProduct();
-            if (b){
-                Toast.makeText(this,"Product details deleted",Toast.LENGTH_LONG).show();
-                startActivity(new Intent(EditActivity.this,MainActivity.class));
-            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Please confirm");
+            builder.setMessage("Are you sure you want to delete this product?");
+            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    boolean b = deleteProduct();
+                    if (b) {
+                        Toast.makeText(EditActivity.this, "Product details deleted", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(EditActivity.this, MainActivity.class));
+                    }
+                }
+            });
+
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.show();
             return true;
         }
 
@@ -297,9 +306,8 @@ public class EditActivity extends AppCompatActivity {
         int deletedRows = getContentResolver().delete(InventoryContract.InventoryEntry.CONTENT_URI,
                 InventoryContract.InventoryEntry.COLUMN_INVENTORY_PRODUCT_NAME + "=?", new String[]{del_item});
 
-        if (deletedRows != 0)
-        {
-            Log.d(getClass().getName(),"deleted rows : " + deletedRows);
+        if (deletedRows != 0) {
+            Log.d(getClass().getName(), "deleted rows : " + deletedRows);
             return true;
         }
         return false;
