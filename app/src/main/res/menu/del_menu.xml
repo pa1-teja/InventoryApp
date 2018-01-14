@@ -5,8 +5,8 @@
 
     <item
         android:id="@+id/delete_product"
-        android:title="@string/delete_product"
         android:icon="@drawable/ic_delete_sweep_black_24dp"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/delete_product"
+        app:showAsAction="ifRoom" />
 
 </menu>

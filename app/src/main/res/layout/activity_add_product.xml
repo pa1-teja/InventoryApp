@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,114 +9,113 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="product details"
         android:textAllCaps="true"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:gravity="center"/>
+        android:textSize="18sp" />
 
     <EditText
-        android:layout_marginTop="16dp"
+        android:id="@+id/product_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/product_name_input"
         android:layout_marginBottom="8dp"
-        android:tooltipText="@string/inventory_product_name"
+        android:layout_marginTop="16dp"
+        android:hint="@string/product_name"
         android:inputType="textAutoCorrect"
-        android:hint="@string/product_name"/>
+        android:tooltipText="@string/inventory_product_name" />
 
     <LinearLayout
-        android:layout_marginTop="16dp"
+        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ll"
         android:layout_below="@id/product_name_input"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/product_price_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
             android:digits="1234567890"
-            android:tooltipText="@string/product_price"
             android:hint="@string/product_price"
-            android:id="@+id/product_price_input"/>
+            android:inputType="number"
+            android:tooltipText="@string/product_price" />
 
         <Button
+            android:id="@+id/add_quantity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:id="@+id/add_quantity"
-            android:tooltipText="Add Quantity"
             android:background="@drawable/ic_add_circle_outline_black_24dp"
-            />
+            android:tooltipText="Add Quantity" />
+
         <EditText
+            android:id="@+id/product_quantity_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
             android:autoSizeTextType="uniform"
             android:hint="@string/product_quantity"
+            android:inputType="number"
             android:maxLength="8"
-            android:tooltipText="@string/product_quantity"
-            android:id="@+id/product_quantity_input"/>
+            android:tooltipText="@string/product_quantity" />
 
         <Button
+            android:id="@+id/reduct_quantity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:tooltipText="Reduce Quantity"
-            android:id="@+id/reduct_quantity"
-            android:background="@drawable/ic_remove_circle_outline_black_24dp"/>
+            android:background="@drawable/ic_remove_circle_outline_black_24dp"
+            android:tooltipText="Reduce Quantity" />
 
     </LinearLayout>
 
     <EditText
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/supplier_name"
-        android:hint="@string/supplier_name"
-        android:inputType="textPersonName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ll"
-        />
+        android:layout_marginTop="16dp"
+        android:hint="@string/supplier_name"
+        android:inputType="textPersonName" />
 
     <EditText
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/supplier_email"
-        android:layout_below="@+id/supplier_name"
-        android:hint="@string/supplier_email"
-        android:inputType="textEmailAddress"/>
-
-    <EditText
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:id="@+id/supplier_phone"
-        android:layout_below="@id/supplier_email"
-        android:hint="@string/supplier_phone"/>
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/supplier_phone"
-        android:text="place order"
-        android:id="@+id/place_order_button"
+        android:layout_below="@+id/supplier_name"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="24dp"/>
+        android:hint="@string/supplier_email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/supplier_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/supplier_email"
+        android:layout_marginTop="16dp"
+        android:hint="@string/supplier_phone"
+        android:inputType="number" />
+
 
     <Button
+        android:id="@+id/place_order_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/save_button"
-        android:text="save details"
         android:layout_below="@+id/supplier_phone"
-        android:layout_toRightOf="@+id/place_order_button"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:text="place order" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/supplier_phone"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/place_order_button"
+        android:text="save details" />
 </RelativeLayout>

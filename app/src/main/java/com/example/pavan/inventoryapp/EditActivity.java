@@ -143,9 +143,11 @@ public class EditActivity extends AppCompatActivity {
         } else if (!product_price.contains("[^0-9]") && (product_price.isEmpty() || product_price == null)) {
             alertUser("price_str");
             return false;
-        } else if (!product_quantity.contains("[^0-9]") && (product_quantity.isEmpty() || product_quantity == null)) {
-            if (product_quantity != null && Integer.valueOf(product_quantity) < 0)
-                alertUser("quantity_str");
+        } else if (product_quantity == null || product_quantity.isEmpty() && !product_quantity.contains("[^0-9]")) {
+            alertUser("quantity_str");
+            return false;
+        } else if (Integer.valueOf(product_quantity) < 0) {
+            alertUser("quantity_str");
             return false;
         } else if (supplier_name.isEmpty() || supplier_name == null) {
             alertUser("supplierName_str");

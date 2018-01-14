@@ -6,21 +6,16 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.pavan.inventoryapp.DataStore.InventoryContract;
 
-import org.w3c.dom.Text;
-
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
 
     public FloatingActionButton addInventory_button;
@@ -34,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getLoaderManager().initLoader(INVENTORY_LOADER,null,this);
+        getLoaderManager().initLoader(INVENTORY_LOADER, null, this);
 
         inventoryListRecyclerView = findViewById(R.id.inventory_list);
         addInventory_button = findViewById(R.id.add_inventory);
@@ -44,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         addInventory_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,AddProduct.class));
+                startActivity(new Intent(MainActivity.this, AddProduct.class));
             }
         });
 
@@ -66,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         return new CursorLoader(MainActivity.this,
                 InventoryContract.InventoryEntry.CONTENT_URI,
-                projection,null,null,null);
+                projection, null, null, null);
     }
 
     @Override
@@ -74,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         listRecyclerAdapter = new InventoryListRecyclerAdapter(this, data);
 
-        if (data.getCount() >0) {
+        if (data.getCount() > 0) {
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
             inventoryListRecyclerView.setLayoutManager(layoutManager);
             inventoryListRecyclerView.setAdapter(listRecyclerAdapter);
